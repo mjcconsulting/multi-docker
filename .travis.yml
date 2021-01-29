@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -f ./client/Dockerfile.dev -t mcrawford/react-test ./client
+
+script:
+  - docker run -e CI=true mcrawford/react-test npm test
+
+after_success:
+  - docker build -t mcrawford/multi-client ./client
+  - docker build -t mcrawford/multi-nginx ./nginx
+  - docker build -t mcrawford/multi-server ./server
+  - docker build -t mcrawford/multi-worker ./worker
+  # Login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to docker hub
+  - docker push mcrawford/multi-client
+  - docker push mcrawford/multi-nginx
+  - docker push mcrawford/multi-server
+  - docker push mcrawford/multi-worker
