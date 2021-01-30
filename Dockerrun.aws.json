@@ -4,24 +4,28 @@
     {
       "name": "client",
       "image": "mcrawford/multi-client",
+      "memory": 128,
       "hostname": "client",
       "essential": false
     },
     {
       "name": "server",
       "image": "mcrawford/multi-server",
+      "memory": 128,
       "hostname": "api",
       "essential": false
     },
     {
       "name": "worker",
       "image": "mcrawford/multi-worker",
+      "memory": 128,
       "hostname": "worker",
       "essential": false
     },
     {
       "name": "nginx",
       "image": "mcrawford/multi-nginx",
+      "memory": 128,
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
